@@ -1,0 +1,326 @@
+import { tx } from '@cityofzion/neon-core';
+import { api, rpc, sc, wallet } from '@cityofzion/neon-js';
+import { IResult, ISchema, IssuerOperation, SeraphIDError } from './common';
+
+/**
+ * Direct communication interface with Seraph ID smart contract.
+ */
+export class SeraphIDContract {
+  /**
+   * Default constructor.
+   * @param scriptHash Script hash of issuer's smart contract.
+   * @param networkRpcUrl URL to NEO RPC.
+   * @param neoscanUrl URL to NEOSCAN API
+   */
+  constructor(
+    protected readonly scriptHash: string,
+    protected readonly networkRpcUrl: string,
+    protected readonly neoscanUrl: string,
+  ) {}
+
+  /**
+   * Returns official name of the Issuer.
+   * @returns Issuer's name.
+   */
+  public async getIssuerName(): Promise<string> {
+    return this.getStringFromOperation(IssuerOperation.Name);
+  }
+
+  /**
+   * Retruns DID of the issuer.
+   * @returns Issuer's DID.
+   */
+  public async getIssuerDID(): Promise<string> {
+    return this.getStringFromOperation(IssuerOperation.DID);
+  }
+
+  /**
+   * Returns public key of the issuer required to validate claim's signature.
+   * @returns Issuer's public key.
+   */
+  public async getIssuerPublicKey(): Promise<string> {
+    return this.getStringFromOperation(IssuerOperation.PublicKey);
+  }
+
+  /**
+   * Returns the schema for specified name.
+   * @param schemaName Name of the schema.
+   * @returns Detailed meta data structure of the given schema.
+   */
+  public async getSchemaDetails(schemaName: string): Promise<ISchema> {
+    const paramSchemaName = sc.ContractParam.string(schemaName);
+
+    const res: any = await rpc.Query.invokeFunction(
+      this.scriptHash,
+      IssuerOperation.GetSchemaDetails,
+      paramSchemaName,
+    ).execute(this.networkRpcUrl);
+    const seraphResult = this.extractResult(res);
+
+    if (!seraphResult.success) {
+      throw new SeraphIDError(seraphResult.error, res.result);
+    }
+
+    const schema: ISchema = JSON.parse(rpc.StringParser(seraphResult.result));
+    return schema;
+  }
+
+  /**
+   * Checks if claim with the given ID is valid.
+   * That is: if it was issued by this issuer and was not yet revoked.
+   * Claim's optional validity dates (from-to) are not a part of this check.
+   * @param claimId ID of the claim.
+   * @returns True if claim is valid, false otherwise.
+   */
+  public async isValidClaim(claimId: string): Promise<boolean> {
+    const paramClaimId = sc.ContractParam.string(claimId);
+    const res: any = await rpc.Query.invokeFunction(
+      this.scriptHash,
+      IssuerOperation.IsValidClaim,
+      paramClaimId,
+    ).execute(this.networkRpcUrl);
+
+    let result = false;
+    if (res.result.stack != null && res.result.stack.length === 1) {
+      result = res.result.stack[0].value;
+    } else {
+      const seraphResult = this.extractResult(res);
+      if (!seraphResult.success) {
+        throw new SeraphIDError(seraphResult.error, res.result);
+      }
+
+      result = rpc.IntegerParser(seraphResult.result) !== 0;
+    }
+
+    return result;
+  }
+
+  /**
+   * Registers a new schema in Issuer's smart contract.
+   * @param schema Schema to register.
+   * @param issuerPrivateKey Private key of the issuer to sign the transaction.
+   * @param gas Additional gas to be sent with invocation transaction.
+   * @param intents Intents to be included in invocation transaction.
+   * @returns Transaction hash.
+   */
+  public async registerSchema(
+    schema: ISchema,
+    issuerPrivateKey: string,
+    gas?: number,
+    intents?: tx.TransactionOutput[],
+  ): Promise<string> {
+    const paramName = sc.ContractParam.string(schema.name);
+    const paramDefinition = sc.ContractParam.string(JSON.stringify(schema));
+    const paramRevokable = sc.ContractParam.boolean(schema.revokable);
+
+    const sb = new sc.ScriptBuilder();
+    sb.emitAppCall(
+      this.scriptHash,
+      IssuerOperation.RegisterSchema,
+      [paramName, paramDefinition, paramRevokable],
+      false,
+    );
+
+    return this.sendSignedTransaction(sb.str, issuerPrivateKey, gas, intents);
+  }
+
+  /**
+   * Injects an issued claim of specified ID into Issuer's smart contract.
+   * @param claimId ID of issued claim.
+   * @param issuerPrivateKey Private key of the issuer to sign the transaction.
+   * @param gas Additional gas to be sent with invocation transaction.
+   * @param intents Intents to be included in invocation transaction.
+   * @returns Transaction hash.
+   */
+  public async injectClaim(
+    claimId: string,
+    issuerPrivateKey: string,
+    gas?: number,
+    intents?: tx.TransactionOutput[],
+  ): Promise<string> {
+    const paramClaimId = sc.ContractParam.string(claimId);
+
+    const sb = new sc.ScriptBuilder();
+    sb.emitAppCall(this.scriptHash, IssuerOperation.InjectClaim, [paramClaimId], false);
+
+    return this.sendSignedTransaction(sb.str, issuerPrivateKey, gas, intents);
+  }
+
+  /**
+   * Revokes previously issued claim of specified ID.
+   * @param gas Id ID of issued claim.
+   * @param issuerPrivateKey Private key of the issuer to sign the transaction.
+   * @param gas Additional gas to be sent with invocation transaction.
+   * @param intents Intents to be included in invocation transaction.
+   * @returns Transaction hash.
+   */
+  public async revokeClaim(
+    claimId: string,
+    issuerPrivateKey: string,
+    gas?: number,
+    intents?: tx.TransactionOutput[],
+  ): Promise<string> {
+    const paramClaimId = sc.ContractParam.string(claimId);
+
+    const sb = new sc.ScriptBuilder();
+    sb.emitAppCall(this.scriptHash, IssuerOperation.RevokeClaim, [paramClaimId], false);
+
+    return this.sendSignedTransaction(sb.str, issuerPrivateKey, gas, intents);
+  }
+
+  /**
+   * Invokes schema registration operation without sending a transaction.
+   * @param schema The schema to be registered.
+   */
+  public async registerSchemaTest(schema: ISchema): Promise<void> {
+    const paramName = sc.ContractParam.string(schema.name);
+    const paramDefinition = sc.ContractParam.string(JSON.stringify(schema));
+    const paramRevokable = sc.ContractParam.boolean(schema.revokable);
+
+    const res: any = await rpc.Query.invokeFunction(
+      this.scriptHash,
+      IssuerOperation.RegisterSchema,
+      paramName,
+      paramDefinition,
+      paramRevokable,
+    ).execute(this.networkRpcUrl);
+    const seraphResult = this.extractResult(res);
+
+    if (!seraphResult.success) {
+      throw new SeraphIDError(seraphResult.error, res.result);
+    }
+  }
+
+  /**
+   * Invokes claim injection operation without sending a transaction.
+   * @param claimId ID of the issued claim.
+   */
+  public async injectClaimTest(claimId: string): Promise<void> {
+    const paramClaimId = sc.ContractParam.string(claimId);
+
+    const res: any = await rpc.Query.invokeFunction(this.scriptHash, IssuerOperation.InjectClaim, paramClaimId).execute(
+      this.networkRpcUrl,
+    );
+    const seraphResult = this.extractResult(res);
+
+    if (!seraphResult.success) {
+      throw new SeraphIDError(seraphResult.error, res.result);
+    }
+  }
+
+  /**
+   * Invokes claim revocation operation without sending a transaction.
+   * @param claimId ID of the claim to be revoked.
+   */
+  public async revokeClaimTest(claimId: string): Promise<void> {
+    const paramClaimId = sc.ContractParam.string(claimId);
+
+    const res: any = await rpc.Query.invokeFunction(this.scriptHash, IssuerOperation.RevokeClaim, paramClaimId).execute(
+      this.networkRpcUrl,
+    );
+    const seraphResult = this.extractResult(res);
+
+    if (!seraphResult.success) {
+      throw new SeraphIDError(seraphResult.error, res.result);
+    }
+  }
+
+  /**
+   * Sents signed transaction to the blockchain.
+   * @param gas t Script for invocation.
+   * @param issuerPrivateKey Private key of the issuer to sign the transaction
+   * @param gas Additional gas to be sent with invocation transaction.
+   * @param intents Intents to be included in invocation transaction.
+   * @returns Transaction hash.
+   */
+  protected async sendSignedTransaction(
+    script: string,
+    issuerPrivateKey: string,
+    gas?: number,
+    intents?: tx.TransactionOutput[],
+  ): Promise<string> {
+    const account = new wallet.Account(issuerPrivateKey);
+    const apiProvider = new api.neoscan.instance(this.neoscanUrl);
+
+    const balance = await apiProvider.getBalance(account.address);
+    const txConfig = {
+      account,
+      api: new api.neoscan.instance(this.networkRpcUrl),
+      balance,
+      gas,
+      intents,
+      script,
+    };
+
+    const invokeConfig = await api
+      .fillSigningFunction(txConfig)
+      .then(api.createInvocationTx)
+      .then(api.modifyTransactionForEmptyTransaction)
+      .then(api.signTx);
+
+    if (invokeConfig.tx) {
+      const serializedTx = invokeConfig.tx.serialize();
+      const res = await rpc.Query.sendRawTransaction(serializedTx).execute(this.networkRpcUrl);
+      if (!res.result) {
+        throw new SeraphIDError('Transaction failed: ' + invokeConfig.tx.hash, res);
+      }
+    } else {
+      throw new SeraphIDError('Transaction signing failed!');
+    }
+
+    return invokeConfig.tx.hash;
+  }
+
+  /**
+   * Invokes a smart contract operation that returns a string.
+   * @param operation Operation name of Seraph ID Issuer's contract.
+   * @returns Operation's result as a string.
+   */
+  protected async getStringFromOperation(operation: string): Promise<string> {
+    const res = await rpc.Query.invokeFunction(this.scriptHash, operation).execute(this.networkRpcUrl);
+    let result: string;
+
+    const seraphResult = this.extractResult(res);
+    if (seraphResult.success) {
+      result = rpc.StringParser(seraphResult.result);
+    } else {
+      throw new SeraphIDError(seraphResult.error, res.result);
+    }
+
+    return result;
+  }
+
+  /**
+   * Extracts the result from smart contract and wraps it in ISeraphResult.
+   * @param res Smart contract's invocation result.
+   * @returns Seraph result.
+   */
+  protected extractResult(res: any): IResult {
+    let result: any | undefined;
+    let success = false;
+    let error: string | undefined = 'Smart Contract failed!';
+
+    if (res.result.stack != null && res.result.stack.length === 1) {
+      const returnObject = res.result.stack[0];
+      if (returnObject.type === 'Array') {
+        const arr = returnObject.value;
+        if (arr != null && arr.length === 2) {
+          success = rpc.IntegerParser(arr[0]) === 1;
+          error = success ? undefined : rpc.StringParser(arr[1]);
+          result = success ? arr[1] : undefined;
+        }
+      } else {
+        success = true;
+        result = returnObject;
+      }
+    }
+
+    const outcome: IResult = {
+      error,
+      result,
+      success,
+    };
+
+    return outcome;
+  }
+}

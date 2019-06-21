@@ -1,0 +1,30 @@
+{
+    "neoRpcUrl": "http://localhost:12345",
+    "neoscanUrl": "http://localhost:4000/api/main_net",
+    "scriptHash": "d7ecc1f4fe442e982a927efc007784332b1dcdad",
+    "issuerName": "Seraph ID Test Issuer",
+    "issuerDID": "did:neo:private:HMT5rCkqvjcjZZHQFvQtsX",
+    "issuerPublicKey": "02b3622bf4017bdfe317c58aed5f4c753f206b7db896046fa7d774bbc4bf7f8dc2",
+    "issuerPrivateKey": "347bc2bd9eb7b9f41a217a26dc5a3d2a3c25ece1c8bff1d5a146aaf4156e3436",
+    "existingSchema": {
+        "name": "TestSchema",
+        "attributes": [
+            "firstName",
+            "lastName",
+            "age"
+        ],
+        "revokable": true
+    },
+    "validClaimId": "ValidTestClaimOfTestSchema",
+    "existingClaimId": "ExistingTestClaimOfTestSchema",
+    "claimAttributes": {
+        "firstName": "John",
+        "lastName": "Demo",
+        "age": 26
+    },
+    "walletName": "TestWallet",
+    "walletPassword": "1234",
+    "walletOwnerPrivateKey": "KxTpZf2WDA8FfMgFeuBVZSifZPt3haPwFvY4aVWCwtMotVn49jpc",
+    "ownerDID": "did:neo:main:AYjoY82d9u3xtDe6Pgsvti3FHu1ki1xcNR",
+    "timeToWaitForBlockConfirmation": 35000
+}
