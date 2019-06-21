@@ -146,7 +146,7 @@ yarn build
 
 Before executing unit tests, please make sure to have:
 - Issuer's smart contract deployed on your network.
-- Network information and test data maintained properly in __tests__/test-data.json file.
+- Network information and test data maintained properly in `__tests__/test-data.json` file.
 
 ```sh
 yarn test
