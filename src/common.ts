@@ -46,6 +46,13 @@ export enum IssuerOperation {
   DID = 'DID',
 }
 
+/** Common NEO DID networks. */
+export enum DIDNetwork {
+  TestNet = 'test',
+  MainNet = 'main',
+  PrivateNet = 'priv',
+}
+
 /**
  * Seraph ID error definition.
  * Used across the library.

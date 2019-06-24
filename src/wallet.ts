@@ -42,12 +42,13 @@ export class SeraphIDWallet extends wallet.Wallet {
   /**
    * Adds a new account to this wallet.
    * @param acct The account to be added.
+   * @param didNetwork DID network for which this account is used according to NEO DID definition (e.g. 'test' or 'main').
    * @returns The index of added account in the wallet.
    */
-  public addAccount(acct: SeraphIDAccount | ISeraphIDAccountJSON): number {
+  public addDIDAccount(acct: SeraphIDAccount | ISeraphIDAccountJSON, didNetwork: string): number {
     const index = this.accounts.length;
     if (!(acct instanceof SeraphIDAccount)) {
-      acct = new SeraphIDAccount(acct);
+      acct = new SeraphIDAccount(acct, didNetwork);
     }
 
     this.accounts.push(acct);
@@ -58,6 +59,19 @@ export class SeraphIDWallet extends wallet.Wallet {
     }
 
     return index;
+  }
+
+  /**
+   * Adds a new account to this wallet.
+   * @param acct The account to be added.
+   * @returns The index of added account in the wallet.
+   */
+  public addAccount(acct: SeraphIDAccount | ISeraphIDAccountJSON): number {
+    if (!acct.extra || !acct.extra[SeraphIDAccount.DID_NETWORK]) {
+      throw new SeraphIDError('DID network is not defined, please use addDIDAccount with specific DID network name');
+    }
+
+    return this.addDIDAccount(acct, acct.extra[SeraphIDAccount.DID_NETWORK]);
   }
 
   /**
@@ -104,9 +118,9 @@ export class SeraphIDWallet extends wallet.Wallet {
    * Creates a new keyPair and associated DID.
    * @returns The generated DID string.
    */
-  public createDID(): string {
+  public createDID(network: string): string {
     const privKey = wallet.generatePrivateKey();
-    const acct = new SeraphIDAccount(privKey);
+    const acct = new SeraphIDAccount(privKey, network);
     this.addAccount(acct);
 
     return acct.getDID();

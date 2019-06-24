@@ -47,9 +47,9 @@ Create a new wallet:
 var wallet = new seraphId.SeraphIDWallet({ name: 'MyWallet' });
 ```
 
-Generate a new DID:
+Generate a new DID (here for private network):
 ```js
-var myDID = wallet.createDID(); // e.g. did:neo:private:HMT5rCkqvjcjZZHQFvQtsX
+var myDID = wallet.createDID(DIDNetwork.PrivateNet); // e.g. did:neo:priv:HMT5rCkqvjcjZZHQFvQtsX
 ```
 
 Add a claim issued by Seraph ID issuer:

@@ -1,5 +1,5 @@
 import { SeraphIDAccount } from '../account';
-import { ISchema } from '../common';
+import { DIDNetwork } from '../common';
 import { SeraphIDIssuer } from '../issuer';
 import { SeraphIDWallet } from '../wallet';
 import testData from './test-data.json';
@@ -12,7 +12,7 @@ interface ITestData {
 
 function getTestData(): ITestData {
   const testObj: ITestData = {
-    account: new SeraphIDAccount(testData.walletOwnerPrivateKey),
+    account: new SeraphIDAccount(testData.walletOwnerPrivateKey, DIDNetwork.PrivateNet),
     issuer: new SeraphIDIssuer(testData.scriptHash, testData.neoRpcUrl, testData.neoscanUrl),
     wallet: new SeraphIDWallet({ name: testData.walletName }),
   };
@@ -64,7 +64,7 @@ test('Wallet.addClaim.encrypted', async () => {
 test('Wallet.export.import', async () => {
   const testObj = getTestData();
   // create keys and wallet
-  const testAccount = new SeraphIDAccount(testData.walletOwnerPrivateKey);
+  const testAccount = new SeraphIDAccount(testData.walletOwnerPrivateKey, DIDNetwork.PrivateNet);
   const testWallet = new SeraphIDWallet({ name: testData.walletName });
   testWallet.addAccount(testAccount);
 
@@ -99,6 +99,7 @@ test('Wallet.export.import', async () => {
   expect(importedWallet).toEqual(testWallet);
   const importedClaim = importedWallet.getClaim(claimId);
 
+  expect(importedWallet.accounts[0].getDID()).toEqual(testAccount.getDID());
   expect(importedClaim).toBeDefined();
   if (importedClaim) {
     expect(importedClaim.validFrom).toEqual(validFrom);
@@ -107,13 +108,13 @@ test('Wallet.export.import', async () => {
 
 test('Wallet.createDID', async () => {
   // create keys and wallet
-  const testAccount = new SeraphIDAccount(testData.walletOwnerPrivateKey);
+  const testAccount = new SeraphIDAccount(testData.walletOwnerPrivateKey, DIDNetwork.PrivateNet);
   const testWallet = new SeraphIDWallet({ name: testData.walletName });
   testWallet.addAccount(testAccount);
   expect(testWallet.getDID(0)).toEqual(testData.ownerDID);
 
   // create new random DID from wallet
-  const did = testWallet.createDID();
+  const did = testWallet.createDID(DIDNetwork.PrivateNet);
 
   expect(testWallet.accounts.length).toEqual(2);
 });

@@ -25,6 +25,6 @@
     "walletName": "TestWallet",
     "walletPassword": "1234",
     "walletOwnerPrivateKey": "KxTpZf2WDA8FfMgFeuBVZSifZPt3haPwFvY4aVWCwtMotVn49jpc",
-    "ownerDID": "did:neo:main:AYjoY82d9u3xtDe6Pgsvti3FHu1ki1xcNR",
+    "ownerDID": "did:neo:priv:AYjoY82d9u3xtDe6Pgsvti3FHu1ki1xcNR",
     "timeToWaitForBlockConfirmation": 35000
 }

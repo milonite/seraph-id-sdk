@@ -15,6 +15,9 @@ export interface ISeraphIDAccountJSON extends wallet.AccountJSON {
  * Single DID account storing all claims issued for this DID.
  */
 export class SeraphIDAccount extends wallet.Account {
+  // DID Network key in extra's map.
+  public static readonly DID_NETWORK = 'DIDnetwork';
+
   // The claims in this account.
   public claims: { [key: string]: IClaim };
 
@@ -27,11 +30,13 @@ export class SeraphIDAccount extends wallet.Account {
   /**
    * Default constructor.
    * @param str The account.
+   * @param didNetwork DID network for which this account is used according to NEO DID definition (e.g. 'test' or 'main').
    */
-  constructor(str: string | Partial<ISeraphIDAccountJSON> = '') {
+  constructor(str: string | Partial<ISeraphIDAccountJSON> = '', didNetwork: string) {
     super(str);
     this.claims = {};
     this.isLocked = false;
+    this.extra[SeraphIDAccount.DID_NETWORK] = didNetwork;
 
     if (typeof str === 'object' && !!str) {
       this.encryptedClaims = str.claims;
@@ -44,8 +49,7 @@ export class SeraphIDAccount extends wallet.Account {
    * @returns DID of this account.
    */
   public getDID(): string {
-    // TODO externalize main.
-    return `did:neo:main:${this.address}`;
+    return `did:neo:${this.extra[SeraphIDAccount.DID_NETWORK]}:${this.address}`;
   }
 
   /**
