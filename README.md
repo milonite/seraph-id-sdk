@@ -152,6 +152,11 @@ Before executing unit tests, please make sure to have:
 yarn test
 ```
 
+# References
+- Seraph ID official page: http://seraphid.io
+- Seraph ID demo application on [GitHub](https://github.com/swisscom-blockchain/seraph-id-demo)
+- Seraph ID smart contract templates and examples on [GitHub](https://github.com/swisscom-blockchain/seraph-id-smart-contracts)
+
 # License
 
 - Open-source [MIT](https://github.com/swisscom-blockchain/seraph-id-sdk/blob/master/LICENSE).
