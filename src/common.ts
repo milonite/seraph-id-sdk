@@ -46,6 +46,17 @@ export enum IssuerOperation {
   DID = 'DID',
 }
 
+/**
+ * Operation names in Root's of Trust smart contract.
+ */
+export enum RootOfTrustOperation {
+  DID = 'DID',
+  Name = 'Name',
+  IsTrusted = 'IsTrusted',
+  RegisterIssuer = 'RegisterIssuer',
+  DeactivateIssuer = 'DeactivateIssuer',
+}
+
 /** Common NEO DID networks. */
 export enum DIDNetwork {
   TestNet = 'test',

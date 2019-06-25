@@ -2,7 +2,7 @@
 
 <p align="center">
 <img
-    src="http://www.seraphid.io/assets/img/logo-dark.png"
+    src="https://www.seraphid.io/assets/img/logo-dark.png"
     width="450px">
 </p>
 <h1></h1>
@@ -20,7 +20,7 @@
 
 This is the JavaScript SDK for Seraph ID - self-severeign identity solution on NEO blockchain platform. This project aims to be a lightweight and simple helper to use Seraph ID wallets, claims issuance and verification in the browser.
 
-Visit the [Seraph ID](http://www.seraphid.io/) official web page to learn more about self-sovereign identity!
+Visit the [Seraph ID](https://www.seraphid.io/) official web page to learn more about self-sovereign identity!
 
 # Getting started
 
@@ -125,6 +125,33 @@ var valid = verifier.validateClaim(claim, function customClaimValidator(clm) {
 });
 ```
 
+Check if issuer of owner's claim is trusted by the given Root of Trust:
+```js
+var trusted = verifier.isIssuerTrusted('scriptHashOfRoTSmartContract', claim.issuerDID, claim.schema);
+```
+
+#### Seraph ID Root of Trust
+
+Create Root of Trust instance:
+```js
+var rot = new seraphId.SeraphIDRootOfTrust('rotSmartContractScriptHash', 'http://localhost:10332', 'http://localhost:4000/api/main_net');
+```
+
+Register issuer's DID and schema as trusted:
+```js
+rot.registerIssuer('did:neo:private:HMT5rCkqvjcjZZHQFvQtsX', 'SchemaName', 'rootOfTrustPrivateKey');
+```
+
+Remove trust for issuer's DID and schema from RoT:
+```js
+rot.deactivateIssuer('did:neo:private:HMT5rCkqvjcjZZHQFvQtsX', 'SchemaName', 'rootOfTrustPrivateKey');
+```
+
+Check if issuer is trusted with the given schema:
+```js
+var trusted = rot.isTrusted('did:neo:private:HMT5rCkqvjcjZZHQFvQtsX', 'SchemaName');
+```
+
 
 # Contributing
 
@@ -153,7 +180,7 @@ yarn test
 ```
 
 # References
-- Seraph ID official page: http://seraphid.io
+- Seraph ID official page: https://seraphid.io
 - Seraph ID demo application on [GitHub](https://github.com/swisscom-blockchain/seraph-id-demo)
 - Seraph ID smart contract templates and examples on [GitHub](https://github.com/swisscom-blockchain/seraph-id-smart-contracts)
 

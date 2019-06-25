@@ -1,11 +1,12 @@
 import { tx } from '@cityofzion/neon-core';
-import { api, rpc, sc, wallet } from '@cityofzion/neon-js';
-import { IResult, ISchema, IssuerOperation, SeraphIDError } from './common';
+import { rpc, sc } from '@cityofzion/neon-js';
+import { ISchema, IssuerOperation, SeraphIDError } from './common';
+import { SeraphIDContractBase } from './contract-base';
 
 /**
- * Direct communication interface with Seraph ID smart contract.
+ * Direct communication interface with Seraph ID smart contract of the Issuer.
  */
-export class SeraphIDContract {
+export class SeraphIDIssuerContract extends SeraphIDContractBase {
   /**
    * Default constructor.
    * @param scriptHash Script hash of issuer's smart contract.
@@ -16,14 +17,16 @@ export class SeraphIDContract {
     protected readonly scriptHash: string,
     protected readonly networkRpcUrl: string,
     protected readonly neoscanUrl: string,
-  ) {}
+  ) {
+    super(networkRpcUrl, neoscanUrl);
+  }
 
   /**
    * Returns official name of the Issuer.
    * @returns Issuer's name.
    */
   public async getIssuerName(): Promise<string> {
-    return this.getStringFromOperation(IssuerOperation.Name);
+    return this.getStringFromOperation(this.scriptHash, IssuerOperation.Name);
   }
 
   /**
@@ -31,7 +34,7 @@ export class SeraphIDContract {
    * @returns Issuer's DID.
    */
   public async getIssuerDID(): Promise<string> {
-    return this.getStringFromOperation(IssuerOperation.DID);
+    return this.getStringFromOperation(this.scriptHash, IssuerOperation.DID);
   }
 
   /**
@@ -39,7 +42,7 @@ export class SeraphIDContract {
    * @returns Issuer's public key.
    */
   public async getIssuerPublicKey(): Promise<string> {
-    return this.getStringFromOperation(IssuerOperation.PublicKey);
+    return this.getStringFromOperation(this.scriptHash, IssuerOperation.PublicKey);
   }
 
   /**
@@ -223,104 +226,5 @@ export class SeraphIDContract {
     if (!seraphResult.success) {
       throw new SeraphIDError(seraphResult.error, res.result);
     }
-  }
-
-  /**
-   * Sents signed transaction to the blockchain.
-   * @param gas t Script for invocation.
-   * @param issuerPrivateKey Private key of the issuer to sign the transaction
-   * @param gas Additional gas to be sent with invocation transaction.
-   * @param intents Intents to be included in invocation transaction.
-   * @returns Transaction hash.
-   */
-  protected async sendSignedTransaction(
-    script: string,
-    issuerPrivateKey: string,
-    gas?: number,
-    intents?: tx.TransactionOutput[],
-  ): Promise<string> {
-    const account = new wallet.Account(issuerPrivateKey);
-    const apiProvider = new api.neoscan.instance(this.neoscanUrl);
-
-    const balance = await apiProvider.getBalance(account.address);
-    const txConfig = {
-      account,
-      api: new api.neoscan.instance(this.networkRpcUrl),
-      balance,
-      gas,
-      intents,
-      script,
-    };
-
-    const invokeConfig = await api
-      .fillSigningFunction(txConfig)
-      .then(api.createInvocationTx)
-      .then(api.modifyTransactionForEmptyTransaction)
-      .then(api.signTx);
-
-    if (invokeConfig.tx) {
-      const serializedTx = invokeConfig.tx.serialize();
-      const res = await rpc.Query.sendRawTransaction(serializedTx).execute(this.networkRpcUrl);
-      if (!res.result) {
-        throw new SeraphIDError('Transaction failed: ' + invokeConfig.tx.hash, res);
-      }
-    } else {
-      throw new SeraphIDError('Transaction signing failed!');
-    }
-
-    return invokeConfig.tx.hash;
-  }
-
-  /**
-   * Invokes a smart contract operation that returns a string.
-   * @param operation Operation name of Seraph ID Issuer's contract.
-   * @returns Operation's result as a string.
-   */
-  protected async getStringFromOperation(operation: string): Promise<string> {
-    const res = await rpc.Query.invokeFunction(this.scriptHash, operation).execute(this.networkRpcUrl);
-    let result: string;
-
-    const seraphResult = this.extractResult(res);
-    if (seraphResult.success) {
-      result = rpc.StringParser(seraphResult.result);
-    } else {
-      throw new SeraphIDError(seraphResult.error, res.result);
-    }
-
-    return result;
-  }
-
-  /**
-   * Extracts the result from smart contract and wraps it in ISeraphResult.
-   * @param res Smart contract's invocation result.
-   * @returns Seraph result.
-   */
-  protected extractResult(res: any): IResult {
-    let result: any | undefined;
-    let success = false;
-    let error: string | undefined = 'Smart Contract failed!';
-
-    if (res.result.stack != null && res.result.stack.length === 1) {
-      const returnObject = res.result.stack[0];
-      if (returnObject.type === 'Array') {
-        const arr = returnObject.value;
-        if (arr != null && arr.length === 2) {
-          success = rpc.IntegerParser(arr[0]) === 1;
-          error = success ? undefined : rpc.StringParser(arr[1]);
-          result = success ? arr[1] : undefined;
-        }
-      } else {
-        success = true;
-        result = returnObject;
-      }
-    }
-
-    const outcome: IResult = {
-      error,
-      result,
-      success,
-    };
-
-    return outcome;
   }
 }
