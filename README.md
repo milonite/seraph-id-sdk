@@ -29,7 +29,7 @@ Visit the [Seraph ID](http://www.seraphid.io/) official web page to learn more a
 ### Node.js
 
 ```js
-npm i seraph-id-sdk --save
+npm i @sbc/seraph-id-sdk --save
 ```
 
 ## Usage
@@ -37,7 +37,7 @@ npm i seraph-id-sdk --save
 ### Node.js
 
 ```js
-var seraphId = require('seraph-id-sdk');
+var seraphId = require('@sbc/seraph-id-sdk');
 ```
 
 #### Seraph ID Owner
