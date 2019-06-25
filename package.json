@@ -1,6 +1,6 @@
 {
   "name": "@sbc/seraph-id-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Seraph ID SDK",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

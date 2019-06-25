@@ -62,7 +62,7 @@ test('SeraphIDContract.injectClaim.validClaim.revokeClaim', async () => {
 
   const tx2 = await contract.revokeClaim(newClaimId, testData.issuerPrivateKey);
   expect(tx2).toBeDefined();
-  
+
   await new Promise(r => setTimeout(r, testData.timeToWaitForBlockConfirmation));
   const isValid2 = await contract.isValidClaim(newClaimId);
   expect(isValid2).toBe(false);
