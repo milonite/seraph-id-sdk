@@ -11,7 +11,7 @@
 To introduce Self-Sovereign Identity support in the NEO blockchain and enforce compatibility
 with the raising standards we propose a DID method for NEO. The DID is a pre-requisite for the [Seraph ID](https://seraphid.io). 
 
-The W3C Credentials Community Group [DIDs](https://w3c-ccg.github.io/did-spec/) standard was choosen for future interopability
+The W3C Credentials Community Group [DIDs](https://w3c-ccg.github.io/did-spec/) standard was chosen for future interopability
 with other Decentralized Identifier provider. The following DID Method will be registered on [DID Method Registry](https://w3c-ccg.github.io/did-method-registry/).
 
 ## NEO-DID Method Definition
@@ -26,7 +26,7 @@ As defined in the W3C Credentials Community Group [DIDs](https://w3c-ccg.github.
 ```
 
 ### Subject
-The choosen subject is "neo" and the following format is required:
+The Seraph ID subject is "neo" and the following format is required:
 
 ```json
 did = "did:neo:" network ":" specific-idstring
@@ -63,7 +63,7 @@ If the identity is public in the network (on-chain identity) then its smart cont
 ```
 
 ### Service Endpoint
-Given the versatile nature of NEO Seraph ID for public, on-chain identity, endpoint to interact with the identity itself is represented by a smart contract. For off-chain, discrete identity, using SBIS as identity cloud manager, a specific endpoint is provided.
+Given the versatile nature of NEO Seraph ID for public, on-chain identity, endpoint to interact with the identity itself is represented by a smart contract. For off-chain, discrete identity, using identity cloud manager, a specific endpoint is provided.
 
 ```json
   "service": [{
@@ -96,7 +96,7 @@ The following example shows the extensive DID method definition proposed for a s
     "type": "smartContractService",
     "serviceEndpoint":"https://www.cloudservice1.org/me"
   },{
-    "type": "SBISService",
+    "type": "CloudService",
     "serviceEndpoint":"https://me.cloudservice2.com"
   }]
 }
