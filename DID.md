@@ -62,9 +62,6 @@ If the identity is public in the network (on-chain identity) then its smart cont
   }]
 ```
 
-### Authorization
-Authorization section is not necessary.
-
 ### Service Endpoint
 Given the versatile nature of NEO Seraph ID for public, on-chain identity, endpoint to interact with the identity itself is represented by a smart contract. For off-chain, discrete identity, using SBIS as identity cloud manager, a specific endpoint is provided.
 
