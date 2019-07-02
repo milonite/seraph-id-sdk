@@ -3,7 +3,7 @@
     "neoscanUrl": "http://localhost:4000/api/main_net",
     "scriptHash": "53d844a67d9d24b6ace2d15b68afacd074970d6f",
     "issuerName": "SeraphID Issuer Template",
-    "issuerDID": "did:neo:priv:HMT5rCkqvjcjZZHQFvQtsX",
+    "issuerDID": "did:neo:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs",
     "issuerPublicKey": "02b3622bf4017bdfe317c58aed5f4c753f206b7db896046fa7d774bbc4bf7f8dc2",
     "issuerPrivateKey": "347bc2bd9eb7b9f41a217a26dc5a3d2a3c25ece1c8bff1d5a146aaf4156e3436",
     "existingSchema": {
@@ -21,7 +21,7 @@
         "age": 26
     },
     "rotName": "SeraphID Trust Anchor Template",
-    "rotDID": "did:neo:priv:HMT5rCkqvjcjZZHQFvQtsX",
+    "rotDID": "did:neo:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs",
     "rotPrivateKey": "347bc2bd9eb7b9f41a217a26dc5a3d2a3c25ece1c8bff1d5a146aaf4156e3436",
     "rotScriptHash": "653beefc4bb00d44723f83fd07b564d2f50036fe",
     "walletName": "TestWallet",
