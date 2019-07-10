@@ -1,3 +1,6 @@
+// Copyright (c) 2019 Swisscom Blockchain AG
+// Licensed under MIT License
+
 export * from './account';
 export * from './common';
 export * from './issuer-contract';

@@ -1,3 +1,6 @@
+// Copyright (c) 2019 Swisscom Blockchain AG
+// Licensed under MIT License
+
 import { ISchema } from '../common';
 import { SeraphIDIssuerContract } from '../issuer-contract';
 import testData from './test-data.json';

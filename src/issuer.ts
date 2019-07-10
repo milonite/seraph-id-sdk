@@ -1,3 +1,6 @@
+// Copyright (c) 2019 Swisscom Blockchain AG
+// Licensed under MIT License
+
 import { tx, wallet } from '@cityofzion/neon-core';
 import { IClaim, ISchema, SeraphIDError } from './common';
 import { SeraphIDVerifier } from './verifier';

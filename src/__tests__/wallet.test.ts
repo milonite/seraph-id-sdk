@@ -1,3 +1,6 @@
+// Copyright (c) 2019 Swisscom Blockchain AG
+// Licensed under MIT License
+
 import { SeraphIDAccount } from '../account';
 import { DIDNetwork } from '../common';
 import { SeraphIDIssuer } from '../issuer';

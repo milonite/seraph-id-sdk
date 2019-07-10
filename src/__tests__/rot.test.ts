@@ -1,3 +1,6 @@
+// Copyright (c) 2019 Swisscom Blockchain AG
+// Licensed under MIT License
+
 import { ISchema } from '../common';
 import { SeraphIDRootOfTrust } from '../rot';
 import testData from './test-data.json';
@@ -26,7 +29,6 @@ test('SeraphIDRootOfTrust.isTrusted.notTrusted', () => {
 
 test('SeraphIDRootOfTrust.registerIssuer.isTrusted.deactivated', async () => {
   const schemaName = 'TestSchema-' + new Date().getTime();
-  console.log(schemaName);
   await new Promise(r => setTimeout(r, testData.timeToWaitForBlockConfirmation));
 
   const tx = await contract.registerIssuer(testData.issuerDID, schemaName, testData.rotPrivateKey);

@@ -1,3 +1,6 @@
+// Copyright (c) 2019 Swisscom Blockchain AG
+// Licensed under MIT License
+
 import { tx } from '@cityofzion/neon-core';
 import { api, rpc, wallet } from '@cityofzion/neon-js';
 import { IResult, SeraphIDError } from './common';

@@ -1,3 +1,6 @@
+// Copyright (c) 2019 Swisscom Blockchain AG
+// Licensed under MIT License
+
 import { wallet } from '@cityofzion/neon-core/';
 import { enc } from 'crypto-js';
 import AES from 'crypto-js/aes';
