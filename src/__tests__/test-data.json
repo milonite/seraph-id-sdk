@@ -1,11 +1,12 @@
 {
     "neoRpcUrl": "http://localhost:12345",
     "neoscanUrl": "http://localhost:4000/api/main_net",
-    "scriptHash": "53d844a67d9d24b6ace2d15b68afacd074970d6f",
+    "network": "PrivateNet",
+    "scriptHash": "0315975e59f4c71db7923f51cfaf7afb6c0be8e2",
     "issuerName": "SeraphID Issuer Template",
-    "issuerDID": "did:neo:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs",
-    "issuerPublicKey": "02b3622bf4017bdfe317c58aed5f4c753f206b7db896046fa7d774bbc4bf7f8dc2",
-    "issuerPrivateKey": "347bc2bd9eb7b9f41a217a26dc5a3d2a3c25ece1c8bff1d5a146aaf4156e3436",
+    "issuerDID": "did:neo:priv:0315975e59f4c71db7923f51cfaf7afb6c0be8e2",
+    "issuerPublicKey": "031a6c6fbbdf02ca351745fa86b9ba5a9452d785ac4f7fc2b7548ca2a46c4fcf4a",
+    "issuerPrivateKey": "1dd37fba80fec4e6a6f13fd708d8dcb3b29def768017052f6c930fa1c5d90bbb",
     "existingSchema": {
         "name": "TestSchema",
         "attributes": [
@@ -21,9 +22,9 @@
         "age": 26
     },
     "rotName": "SeraphID Trust Anchor Template",
-    "rotDID": "did:neo:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs",
-    "rotPrivateKey": "347bc2bd9eb7b9f41a217a26dc5a3d2a3c25ece1c8bff1d5a146aaf4156e3436",
-    "rotScriptHash": "653beefc4bb00d44723f83fd07b564d2f50036fe",
+    "rotDID": "did:neo:priv:81210f2127603ae7e910e452e4a140ee4e713527",
+    "rotPrivateKey": "1dd37fba80fec4e6a6f13fd708d8dcb3b29def768017052f6c930fa1c5d90bbb",
+    "rotScriptHash": "81210f2127603ae7e910e452e4a140ee4e713527",
     "walletName": "TestWallet",
     "walletPassword": "1234",
     "walletOwnerPrivateKey": "KxTpZf2WDA8FfMgFeuBVZSifZPt3haPwFvY4aVWCwtMotVn49jpc",

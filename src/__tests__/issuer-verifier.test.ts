@@ -2,13 +2,13 @@
 // Licensed under MIT License
 
 import { wallet } from '@cityofzion/neon-js';
-import { ISchema } from '../common';
+import { DIDNetwork, ISchema } from '../common';
 import { SeraphIDIssuer } from '../issuer';
 import { SeraphIDIssuerContract } from '../issuer-contract';
 import testData from './test-data.json';
 
-const issuer = new SeraphIDIssuer(testData.scriptHash, testData.neoRpcUrl, testData.neoscanUrl);
-const contract = new SeraphIDIssuerContract(testData.scriptHash, testData.neoRpcUrl, testData.neoscanUrl);
+const issuer = new SeraphIDIssuer(testData.scriptHash, testData.neoRpcUrl, testData.neoscanUrl, DIDNetwork.PrivateNet);
+const contract = new SeraphIDIssuerContract(testData.scriptHash, testData.neoRpcUrl, testData.neoscanUrl, DIDNetwork.PrivateNet);
 
 // Increase test suite timeout as we need to wait for block confirmation.
 jest.setTimeout(240000);

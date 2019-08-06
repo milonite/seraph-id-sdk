@@ -46,14 +46,12 @@ export enum IssuerOperation {
   IsValidClaim = 'IsValidClaim',
   PublicKey = 'PublicKey',
   Name = 'Name',
-  DID = 'DID',
 }
 
 /**
  * Operation names in Root's of Trust smart contract.
  */
 export enum RootOfTrustOperation {
-  DID = 'DID',
   Name = 'Name',
   IsTrusted = 'IsTrusted',
   RegisterIssuer = 'RegisterIssuer',

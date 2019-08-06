@@ -1,11 +1,11 @@
 // Copyright (c) 2019 Swisscom Blockchain AG
 // Licensed under MIT License
 
-import { ISchema } from '../common';
+import { DIDNetwork } from '../common';
 import { SeraphIDRootOfTrust } from '../rot';
 import testData from './test-data.json';
 
-const contract = new SeraphIDRootOfTrust(testData.rotScriptHash, testData.neoRpcUrl, testData.neoscanUrl);
+const contract = new SeraphIDRootOfTrust(testData.rotScriptHash, testData.neoRpcUrl, testData.neoscanUrl, DIDNetwork.PrivateNet);
 
 // Increase test suite timeout as we need to wait for block confirmation.
 jest.setTimeout(240000);
@@ -19,7 +19,7 @@ test('SeraphIDRootOfTrust.getName', () => {
 });
 
 test('SeraphIDRootOfTrust.getIssuerDID', () => {
-  expect(contract.getDID()).resolves.toBe(testData.rotDID);
+  expect(contract.getDID()).toBe(testData.rotDID);
 });
 
 test('SeraphIDRootOfTrust.isTrusted.notTrusted', () => {

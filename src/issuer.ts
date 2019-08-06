@@ -2,7 +2,7 @@
 // Licensed under MIT License
 
 import { tx, wallet } from '@cityofzion/neon-core';
-import { IClaim, ISchema, SeraphIDError } from './common';
+import { DIDNetwork, IClaim, ISchema, SeraphIDError } from './common';
 import { SeraphIDVerifier } from './verifier';
 
 /**
@@ -14,13 +14,15 @@ export class SeraphIDIssuer extends SeraphIDVerifier {
    * @param scriptHash Script hash of issuer's smart contract.
    * @param networkRpcUrl URL to NEO RPC.
    * @param neoscanUrl URL to NEOSCAN API
+   * @param network Network identifier used for DID
    */
   constructor(
     protected readonly scriptHash: string,
     protected readonly networkRpcUrl: string,
     protected readonly neoscanUrl: string,
+    protected readonly network: DIDNetwork,
   ) {
-    super(scriptHash, networkRpcUrl, neoscanUrl);
+    super(scriptHash, networkRpcUrl, neoscanUrl, network);
   }
 
   /**
@@ -106,7 +108,7 @@ export class SeraphIDIssuer extends SeraphIDVerifier {
   ): Promise<IClaim> {
     let result: IClaim = await this.validateClaimStructure(claim);
 
-    result.issuerDID = await this.contract.getIssuerDID();
+    result.issuerDID =  this.contract.getIssuerDID();
     result = await this.signClaim(claim, issuerPrivateKey);
     result.tx = await this.contract.injectClaim(claim.id, issuerPrivateKey, gas, intents);
 

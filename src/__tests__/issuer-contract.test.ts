@@ -1,11 +1,11 @@
 // Copyright (c) 2019 Swisscom Blockchain AG
 // Licensed under MIT License
 
-import { ISchema } from '../common';
+import { DIDNetwork, ISchema } from '../common';
 import { SeraphIDIssuerContract } from '../issuer-contract';
 import testData from './test-data.json';
 
-const contract = new SeraphIDIssuerContract(testData.scriptHash, testData.neoRpcUrl, testData.neoscanUrl);
+const contract = new SeraphIDIssuerContract(testData.scriptHash, testData.neoRpcUrl, testData.neoscanUrl, DIDNetwork.PrivateNet);
 
 // Increase test suite timeout as we need to wait for block confirmation.
 jest.setTimeout(240000);
@@ -19,7 +19,7 @@ test('SeraphIDContract.getIssuerName', () => {
 });
 
 test('SeraphIDContract.getIssuerDID', () => {
-  expect(contract.getIssuerDID()).resolves.toBe(testData.issuerDID);
+  expect(contract.getIssuerDID()).toBe(testData.issuerDID);
 });
 
 test('SeraphIDContract.getIssuerPublicKey', () => {
