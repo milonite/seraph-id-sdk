@@ -31,7 +31,7 @@ The Seraph ID subject is "neo" and the following format is required:
 ```json
 did = "did:neo:" network ":" specific-idstring
 network = ("test" / "main")
-specific-idstring = NEO Public address (see below)
+specific-idstring = NEO public address or issuer smart contract ScriptHash (see below)
 ```
 
 `specific-idstring` will be generated using a NEO Public address = `base58check(ScriptHash)`, where `ScriptHash = RIPMD160(SHA256(publicKey))`
@@ -45,19 +45,19 @@ specific-idstring = NEO Public address (see below)
 
 ### Public Keys
 A public key section is defined in order to support encryption and cryptography operations.
-The public key is generated accordingly to the NEO cryptography available support.
-If the identity is public in the network (on-chain identity) then its smart contract public address will be also listed in the available public keys. 
+The public key is generated according to the NEO cryptography available support.
+If the identity is public in the network (on-chain identity) then its smart contract ScriptHash will be also listed in the available public keys. 
 
 ```json
  "publicKey": [{
-    "id": "did:neo:main:AefrasH3wVfReDogQMx2LHq9o6XEAVTv8X#keys-1",
+    "id": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-1",
     "type": "EdDsaSAPublicKeySecp256r1",
-    "controller": "did:neo:AefrasH3wVfReDogQMx2LHq9o6XEAVTv8X",
+    "controller": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527",
     "publicKeyBase58": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
   },{
-    "id": "did:neo:main:AefrasH3wVfReDogQMx2LHq9o6XEAVTv8X#keys-2",
+    "id": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-2",
     "type": "EdDsaSAPublicKeySecp256r1",
-    "controller": "did:neo:AefrasH3wVfReDogQMx2LHq9o6XEAVTv8X",
+    "controller": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527",
     "publicKeyBase58": "J5D3ADfNNv6gmMAgNjZpfkcJCwDwnZn6x4FprfkcsADS"
   }]
 ```
@@ -80,16 +80,16 @@ The following example shows the extensive DID method definition proposed for a s
 ```json
 {
   "@context": "https://w3id.org/did/v1",
-  "id": "did:neo:main:AefrasH3wVfReDogQMx2LHq9o6XEAVTv8X",
+  "id": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527",
   "publicKey": [{
-    "id": "did:neo:main:AefrasH3wVfReDogQMx2LHq9o6XEAVTv8X#keys-1",
+    "id": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-1",
     "type": "RsaVerificationKey2018",
-    "controller": "did:neo:AefrasH3wVfReDogQMx2LHq9o6XEAVTv8X",
+    "controller": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527",
     "publicKeyBase58": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
   },{
-    "id": "did:neo:main:AefrasH3wVfReDogQMx2LHq9o6XEAVTv8X#keys-2",
+    "id": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-2",
     "type": "RsaVerificationKey2018",
-    "controller": "did:neo:AefrasH3wVfReDogQMx2LHq9o6XEAVTv8X",
+    "controller": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527",
     "publicKeyBase58": "J5D3ADfNNv6gmMAgNjZpfkcJCwDwnZn6x4FprfkcsADS"
   }],
   "service": [{
