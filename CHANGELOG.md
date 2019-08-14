@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.0] - 2019-08-14
 
 ### Added
-- Uing CHANGELOG.md
+- Start using CHANGELOG.md to keep track of changes
 
 ### Changed
 - Adds new mandatory parameter (DIDNetwork) to Issuer, Verifier etc.
