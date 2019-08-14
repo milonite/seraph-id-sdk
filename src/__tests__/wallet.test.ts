@@ -16,7 +16,7 @@ interface ITestData {
 function getTestData(): ITestData {
   const testObj: ITestData = {
     account: new SeraphIDAccount(testData.walletOwnerPrivateKey, DIDNetwork.PrivateNet),
-    issuer: new SeraphIDIssuer(testData.scriptHash, testData.neoRpcUrl, testData.neoscanUrl),
+    issuer: new SeraphIDIssuer(testData.scriptHash, testData.neoRpcUrl, testData.neoscanUrl, DIDNetwork.PrivateNet),
     wallet: new SeraphIDWallet({ name: testData.walletName }),
   };
   testObj.wallet.addAccount(testObj.account);
@@ -107,7 +107,7 @@ test('Wallet.export.import', async () => {
   if (importedClaim) {
     expect(importedClaim.validFrom).toEqual(validFrom);
   }
-}, 10000);
+}, 20000);
 
 test('Wallet.createDID', async () => {
   // create keys and wallet

@@ -76,7 +76,7 @@ var claim = wallet.getClaim('claimId');
 
 Create issuer instance:
 ```js
-var issuer = new seraphId.SeraphIDIssuer('issuerSmartContractScriptHash', 'http://localhost:10332', 'http://localhost:4000/api/main_net');
+var issuer = new seraphId.SeraphIDIssuer('issuerSmartContractScriptHash', 'http://localhost:10332', 'http://localhost:4000/api/main_net', DIDNetwork.PrivateNet);
 ```
 
 Create a new (revokable) credentials schema:
@@ -100,7 +100,7 @@ issuer.revokeClaimById('claimId');
 
 Create verifier instance:
 ```js
-var verifier = new seraphId.SeraphIDVerifier('issuerSmartContractScriptHash', 'http://localhost:10332', 'http://localhost:4000/api/main_net');
+var verifier = new seraphId.SeraphIDVerifier('issuerSmartContractScriptHash', 'http://localhost:10332', 'http://localhost:4000/api/main_net', DIDNetwork.PrivateNet);
 ```
 
 Get meta-data of issuer's credentials schema:
@@ -134,7 +134,7 @@ var trusted = verifier.isIssuerTrusted('scriptHashOfRoTSmartContract', claim.iss
 
 Create Root of Trust instance:
 ```js
-var rot = new seraphId.SeraphIDRootOfTrust('rotSmartContractScriptHash', 'http://localhost:10332', 'http://localhost:4000/api/main_net');
+var rot = new seraphId.SeraphIDRootOfTrust('rotSmartContractScriptHash', 'http://localhost:10332', 'http://localhost:4000/api/main_net', DIDNetwork.PrivateNet);
 ```
 
 Register issuer's DID and schema as trusted:

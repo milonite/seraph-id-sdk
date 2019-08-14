@@ -2,7 +2,7 @@
 // Licensed under MIT License
 
 import { u, wallet } from '@cityofzion/neon-core';
-import { IClaim, ISchema, SeraphIDError } from './common';
+import { DIDNetwork, IClaim, ISchema, SeraphIDError } from './common';
 import { SeraphIDIssuerContract } from './issuer-contract';
 import { SeraphIDRootOfTrust } from './rot';
 
@@ -18,13 +18,15 @@ export class SeraphIDVerifier {
    * @param scriptHash Script hash of issuer's smart contract.
    * @param networkRpcUrl URL to NEO RPC.
    * @param neoscanUrl URL to NEOSCAN API
+   * @param network Network identifier used for DID
    */
   constructor(
     protected readonly issuerScriptHash: string,
     protected readonly networkRpcUrl: string,
     protected readonly neoscanUrl: string,
+    protected readonly network: DIDNetwork,
   ) {
-    this.contract = new SeraphIDIssuerContract(issuerScriptHash, networkRpcUrl, neoscanUrl);
+    this.contract = new SeraphIDIssuerContract(issuerScriptHash, networkRpcUrl, neoscanUrl, network);
   }
 
   /**
@@ -108,7 +110,7 @@ export class SeraphIDVerifier {
    * @returns True if issuer and their schema is trusted by RoT.
    */
   public async isIssuerTrusted(rotScriptHash: string, issuerDID: string, schemaName: string): Promise<boolean> {
-    return new SeraphIDRootOfTrust(rotScriptHash, this.networkRpcUrl, this.neoscanUrl).isTrusted(issuerDID, schemaName);
+    return new SeraphIDRootOfTrust(rotScriptHash, this.networkRpcUrl, this.neoscanUrl, this.network).isTrusted(issuerDID, schemaName);
   }
 
   /**

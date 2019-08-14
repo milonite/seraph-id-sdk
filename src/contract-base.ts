@@ -3,7 +3,7 @@
 
 import { tx } from '@cityofzion/neon-core';
 import { api, rpc, wallet } from '@cityofzion/neon-js';
-import { IResult, SeraphIDError } from './common';
+import { DIDNetwork, IResult, SeraphIDError } from './common';
 
 /**
  * Base class for Seraph ID smart contracts.
@@ -13,8 +13,9 @@ export class SeraphIDContractBase {
    * Default constructor.
    * @param networkRpcUrl URL to NEO RPC.
    * @param neoscanUrl URL to NEOSCAN API
+   * @param network Network identifier used for DID
    */
-  constructor(protected readonly networkRpcUrl: string, protected readonly neoscanUrl: string) {}
+  constructor(protected readonly networkRpcUrl: string, protected readonly neoscanUrl: string, protected readonly network: DIDNetwork) {}
 
   /**
    * Sents signed transaction to the blockchain.

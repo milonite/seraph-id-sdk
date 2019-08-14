@@ -3,7 +3,7 @@
 
 import { tx } from '@cityofzion/neon-core';
 import { rpc, sc } from '@cityofzion/neon-js';
-import { RootOfTrustOperation, SeraphIDError } from './common';
+import { DIDNetwork, RootOfTrustOperation, SeraphIDError } from './common';
 import { SeraphIDContractBase } from './contract-base';
 
 /**
@@ -15,13 +15,15 @@ export class SeraphIDRootOfTrust extends SeraphIDContractBase {
    * @param scriptHash Script hash of issuer's smart contract.
    * @param networkRpcUrl URL to NEO RPC.
    * @param neoscanUrl URL to NEOSCAN API
+   * @param network Network identifier used for DID
    */
   constructor(
     protected readonly scriptHash: string,
     protected readonly networkRpcUrl: string,
     protected readonly neoscanUrl: string,
+    protected readonly network: DIDNetwork,
   ) {
-    super(networkRpcUrl, neoscanUrl);
+    super(networkRpcUrl, neoscanUrl, network);
   }
 
   /**
@@ -36,8 +38,8 @@ export class SeraphIDRootOfTrust extends SeraphIDContractBase {
    * Retruns DID of the issuer.
    * @returns Root of Trust DID.
    */
-  public async getDID(): Promise<string> {
-    return this.getStringFromOperation(this.scriptHash, RootOfTrustOperation.DID);
+  public getDID(): string {
+    return `did:neo:${this.network}:${this.scriptHash}` 
   }
 
   /**
