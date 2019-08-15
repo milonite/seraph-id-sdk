@@ -18,7 +18,7 @@
 
 # Overview
 
-This is the JavaScript SDK for Seraph ID - self-severeign identity solution on NEO blockchain platform. This project aims to be a lightweight and simple helper to use Seraph ID wallets, claims issuance and verification in the browser.
+This is the JavaScript SDK for Seraph ID - a self-sovereign identity solution on the NEO blockchain platform. This project aims to be a lightweight and simple helper to use Seraph ID wallets, claims issuance and verification in the browser.
 
 Visit the [Seraph ID](https://www.seraphid.io/) official web page to learn more about self-sovereign identity!
 
