@@ -4,7 +4,7 @@
     "network": "PrivateNet",
     "scriptHash": "0315975e59f4c71db7923f51cfaf7afb6c0be8e2",
     "issuerName": "SeraphID Issuer Template",
-    "issuerDID": "did:neo:priv:0315975e59f4c71db7923f51cfaf7afb6c0be8e2",
+    "issuerDID": "did:sid:priv:0315975e59f4c71db7923f51cfaf7afb6c0be8e2",
     "issuerPublicKey": "031a6c6fbbdf02ca351745fa86b9ba5a9452d785ac4f7fc2b7548ca2a46c4fcf4a",
     "issuerPrivateKey": "1dd37fba80fec4e6a6f13fd708d8dcb3b29def768017052f6c930fa1c5d90bbb",
     "existingSchema": {
@@ -22,12 +22,12 @@
         "age": 26
     },
     "rotName": "SeraphID Trust Anchor Template",
-    "rotDID": "did:neo:priv:81210f2127603ae7e910e452e4a140ee4e713527",
+    "rotDID": "did:sid:priv:81210f2127603ae7e910e452e4a140ee4e713527",
     "rotPrivateKey": "1dd37fba80fec4e6a6f13fd708d8dcb3b29def768017052f6c930fa1c5d90bbb",
     "rotScriptHash": "81210f2127603ae7e910e452e4a140ee4e713527",
     "walletName": "TestWallet",
     "walletPassword": "1234",
     "walletOwnerPrivateKey": "KxTpZf2WDA8FfMgFeuBVZSifZPt3haPwFvY4aVWCwtMotVn49jpc",
-    "ownerDID": "did:neo:priv:AYjoY82d9u3xtDe6Pgsvti3FHu1ki1xcNR",
+    "ownerDID": "did:sid:priv:AYjoY82d9u3xtDe6Pgsvti3FHu1ki1xcNR",
     "timeToWaitForBlockConfirmation": 35000
 }

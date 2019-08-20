@@ -26,20 +26,20 @@ As defined in the W3C Credentials Community Group [DIDs](https://w3c-ccg.github.
 ```
 
 ### Subject
-The Seraph ID subject is "neo" and the following format is required:
+The Seraph ID subject is "sid" and the following format is required:
 
 ```json
-did = "did:neo:" network ":" specific-idstring
+did = "did:sid:" network ":" specific-idstring
 network = ("test" / "main")
 specific-idstring = NEO public address or issuer smart contract ScriptHash (see below)
 ```
 
-`specific-idstring` will be generated using a NEO Public address = `base58check(ScriptHash)`, where `ScriptHash = RIPMD160(SHA256(publicKey))`
+`specific-idstring` will be generated using a NEO Public key 
 
 ```json
 <pre>
 {
-  "id": "did:neo:main:AefrasH3wVfReDogQMx2LHq9o6XEAVTv8X"
+  "id": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527"
 }
 ```
 
@@ -50,15 +50,15 @@ If the identity is public in the network (on-chain identity) then its smart cont
 
 ```json
  "publicKey": [{
-    "id": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-1",
-    "type": "EdDsaSAPublicKeySecp256r1",
-    "controller": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527",
-    "publicKeyBase58": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
+    "id": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-1",
+    "type": "EcdsaSecp256r1VerificationKey2019",
+    "controller": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527",
+    "publicKeyHex": "02103a7f7dd016558597f7960d27c516a4394fd968b9e65155eb4b013e4040406e"
   },{
-    "id": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-2",
-    "type": "EdDsaSAPublicKeySecp256r1",
-    "controller": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527",
-    "publicKeyBase58": "J5D3ADfNNv6gmMAgNjZpfkcJCwDwnZn6x4FprfkcsADS"
+    "id": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-2",
+    "type": "EcdsaSecp256r1VerificationKey2019",
+    "controller": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527",
+    "publicKeyHex": "38fdd55282cace2081c1db2f8ac5979fa2cd23bf2d7a15c6c687190e42c5272d5a"
   }]
 ```
 
@@ -80,17 +80,32 @@ The following example shows the extensive DID method definition proposed for a s
 ```json
 {
   "@context": "https://w3id.org/did/v1",
-  "id": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527",
+  "id": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527",
+  "authentication": [
+      {
+        "type": "EcdsaSecp256r1Authentication2019",
+        "publicKey": [
+          "did:sid:priv:81210f2127603ae7e910e452e4a140ee4e713527#keys-1"
+        ]
+      },
+      {
+        "type": "EcdsaSecp256r1Authentication2019",
+        "publicKey": [
+          "did:sid:priv:81210f2127603ae7e910e452e4a140ee4e713527#keys-2"
+        ]
+      }
+
+  ]
   "publicKey": [{
-    "id": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-1",
-    "type": "RsaVerificationKey2018",
-    "controller": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527",
-    "publicKeyBase58": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV"
+    "id": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-1",
+    "type": "EcdsaSecp256r1VerificationKey2019",
+    "controller": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527",
+    "publicKeyHex": "02103a7f7dd016558597f7960d27c516a4394fd968b9e65155eb4b013e4040406e"
   },{
-    "id": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-2",
-    "type": "RsaVerificationKey2018",
-    "controller": "did:neo:main:81210f2127603ae7e910e452e4a140ee4e713527",
-    "publicKeyBase58": "J5D3ADfNNv6gmMAgNjZpfkcJCwDwnZn6x4FprfkcsADS"
+    "id": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-2",
+    "type": "EcdsaSecp256r1VerificationKey2019",
+    "controller": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527",
+    "publicKeyHex": "38fdd55282cace2081c1db2f8ac5979fa2cd23bf2d7a15c6c687190e42c5272d5a"
   }],
   "service": [{
     "type": "smartContractService",

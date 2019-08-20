@@ -39,7 +39,7 @@ export class SeraphIDRootOfTrust extends SeraphIDContractBase {
    * @returns Root of Trust DID.
    */
   public getDID(): string {
-    return `did:neo:${this.network}:${this.scriptHash}` 
+    return `did:sid:${this.network}:${this.scriptHash}` 
   }
 
   /**
