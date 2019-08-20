@@ -148,7 +148,7 @@ export class SeraphIDWallet extends wallet.Wallet {
   public getAccountByDID(did: string): SeraphIDAccount | undefined {
     const idx = this.didMap[did];
 
-    if (idx && this.accounts.length > idx) {
+    if (idx !== undefined && this.accounts.length > idx) {
       return this.accounts[idx];
     }
   }
