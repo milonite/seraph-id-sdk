@@ -52,7 +52,7 @@ export class SeraphIDAccount extends wallet.Account {
    * @returns DID of this account.
    */
   public getDID(): string {
-    return `did:sid:${this.extra[SeraphIDAccount.DID_NETWORK]}:${this.address}`;
+    return `did:neoid:${this.extra[SeraphIDAccount.DID_NETWORK]}:${this.address}`;
   }
 
   /**

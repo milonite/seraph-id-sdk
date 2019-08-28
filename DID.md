@@ -26,10 +26,10 @@ As defined in the W3C Credentials Community Group [DIDs](https://w3c-ccg.github.
 ```
 
 ### Subject
-The Seraph ID subject is "sid" and the following format is required:
+The Seraph ID subject is "neoid" and the following format is required:
 
 ```json
-did = "did:sid:" network ":" specific-idstring
+did = "did:neoid:" network ":" specific-idstring
 network = ("test" / "main")
 specific-idstring = NEO public address or issuer smart contract ScriptHash (see below)
 ```
@@ -39,7 +39,7 @@ specific-idstring = NEO public address or issuer smart contract ScriptHash (see 
 ```json
 <pre>
 {
-  "id": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527"
+  "id": "did:neoid:main:81210f2127603ae7e910e452e4a140ee4e713527"
 }
 ```
 
@@ -50,14 +50,14 @@ If the identity is public in the network (on-chain identity) then its smart cont
 
 ```json
  "publicKey": [{
-    "id": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-1",
+    "id": "did:neoid:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-1",
     "type": "EcdsaSecp256r1VerificationKey2019",
-    "controller": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527",
+    "controller": "did:neoid:main:81210f2127603ae7e910e452e4a140ee4e713527",
     "publicKeyHex": "02103a7f7dd016558597f7960d27c516a4394fd968b9e65155eb4b013e4040406e"
   },{
-    "id": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-2",
+    "id": "did:neoid:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-2",
     "type": "EcdsaSecp256r1VerificationKey2019",
-    "controller": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527",
+    "controller": "did:neoid:main:81210f2127603ae7e910e452e4a140ee4e713527",
     "publicKeyHex": "38fdd55282cace2081c1db2f8ac5979fa2cd23bf2d7a15c6c687190e42c5272d5a"
   }]
 ```
@@ -80,31 +80,31 @@ The following example shows the extensive DID method definition proposed for a s
 ```json
 {
   "@context": "https://w3id.org/did/v1",
-  "id": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527",
+  "id": "did:neoid:main:81210f2127603ae7e910e452e4a140ee4e713527",
   "authentication": [
       {
         "type": "EcdsaSecp256r1Authentication2019",
         "publicKey": [
-          "did:sid:priv:81210f2127603ae7e910e452e4a140ee4e713527#keys-1"
+          "did:neoid:priv:81210f2127603ae7e910e452e4a140ee4e713527#keys-1"
         ]
       },
       {
         "type": "EcdsaSecp256r1Authentication2019",
         "publicKey": [
-          "did:sid:priv:81210f2127603ae7e910e452e4a140ee4e713527#keys-2"
+          "did:neoid:priv:81210f2127603ae7e910e452e4a140ee4e713527#keys-2"
         ]
       }
 
   ]
   "publicKey": [{
-    "id": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-1",
+    "id": "did:neoid:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-1",
     "type": "EcdsaSecp256r1VerificationKey2019",
-    "controller": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527",
+    "controller": "did:neoid:main:81210f2127603ae7e910e452e4a140ee4e713527",
     "publicKeyHex": "02103a7f7dd016558597f7960d27c516a4394fd968b9e65155eb4b013e4040406e"
   },{
-    "id": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-2",
+    "id": "did:neoid:main:81210f2127603ae7e910e452e4a140ee4e713527#keys-2",
     "type": "EcdsaSecp256r1VerificationKey2019",
-    "controller": "did:sid:main:81210f2127603ae7e910e452e4a140ee4e713527",
+    "controller": "did:neoid:main:81210f2127603ae7e910e452e4a140ee4e713527",
     "publicKeyHex": "38fdd55282cace2081c1db2f8ac5979fa2cd23bf2d7a15c6c687190e42c5272d5a"
   }],
   "service": [{
