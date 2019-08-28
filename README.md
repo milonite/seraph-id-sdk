@@ -49,7 +49,7 @@ var wallet = new seraphId.SeraphIDWallet({ name: 'MyWallet' });
 
 Generate a new DID (here for private network):
 ```js
-var myDID = wallet.createDID(DIDNetwork.PrivateNet); // e.g. did:neo:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs
+var myDID = wallet.createDID(DIDNetwork.PrivateNet); // e.g. did:neoid:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs
 ```
 
 Add a claim issued by Seraph ID issuer:
@@ -68,7 +68,7 @@ Import wallet, decrypt it and get all claims of a specified DID or a claim by ID
 var wallet = new seraphId.SeraphIDWallet(exportedWalletJson);
 wallet.decryptAll('password');
 
-var allClaims = wallet.getAllClaims('did:neo:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs');
+var allClaims = wallet.getAllClaims('did:neoid:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs');
 var claim = wallet.getClaim('claimId');
 ```
 
@@ -86,7 +86,7 @@ issuer.registerNewSchema('schemaName', ['firstName', 'lastName', 'age'], true);
 
 Create and issue a claim: 
 ```js
-var claim = issuer.createClaim('claimId', 'schemaName', {'firstName': 'John', 'lastName': 'Doe', 'age': 26}, 'did:neo:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs');
+var claim = issuer.createClaim('claimId', 'schemaName', {'firstName': 'John', 'lastName': 'Doe', 'age': 26}, 'did:neoid:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs');
 
 issuer.issueClaim(claim, 'issuerPrivateKey');
 ```
@@ -139,17 +139,17 @@ var rot = new seraphId.SeraphIDRootOfTrust('rotSmartContractScriptHash', 'http:/
 
 Register issuer's DID and schema as trusted:
 ```js
-rot.registerIssuer('did:neo:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs', 'SchemaName', 'rootOfTrustPrivateKey');
+rot.registerIssuer('did:neoid:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs', 'SchemaName', 'rootOfTrustPrivateKey');
 ```
 
 Remove trust for issuer's DID and schema from RoT:
 ```js
-rot.deactivateIssuer('did:neo:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs', 'SchemaName', 'rootOfTrustPrivateKey');
+rot.deactivateIssuer('did:neoid:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs', 'SchemaName', 'rootOfTrustPrivateKey');
 ```
 
 Check if issuer is trusted with the given schema:
 ```js
-var trusted = rot.isTrusted('did:neo:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs', 'SchemaName');
+var trusted = rot.isTrusted('did:neoid:priv:AKkkumHbBipZ46UMZJoFynJMXzSRnBvKcs', 'SchemaName');
 ```
 
 

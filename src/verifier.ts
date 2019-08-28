@@ -142,7 +142,7 @@ export class SeraphIDVerifier {
    * @returns NEO Address of DID owner.
    */
   public addressFromDID(did: string): string {
-    if (!did || !did.startsWith('did:neo:')) {
+    if (!did || !did.startsWith('did:neoid:')) {
       throw new SeraphIDError(`${did} is not a valid Seraph ID DID.`);
     }
 

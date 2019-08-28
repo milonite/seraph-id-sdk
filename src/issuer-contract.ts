@@ -39,7 +39,7 @@ export class SeraphIDIssuerContract extends SeraphIDContractBase {
    * @returns Issuer's DID.
    */
   public getIssuerDID(): string {
-    return `did:neo:${this.network}:${this.scriptHash}`;
+    return `did:neoid:${this.network}:${this.scriptHash}`;
   }
 
   /**
