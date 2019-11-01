@@ -183,6 +183,8 @@ yarn test
 - Seraph ID official page: https://seraphid.io
 - Seraph ID demo application on [GitHub](https://github.com/swisscom-blockchain/seraph-id-demo)
 - Seraph ID smart contract templates and examples on [GitHub](https://github.com/swisscom-blockchain/seraph-id-smart-contracts)
+- Seraph ID chrome extension [GitHub](https://github.com/swisscom-blockchain/seraph-id-chrome-extension)
+
 
 # License
 
